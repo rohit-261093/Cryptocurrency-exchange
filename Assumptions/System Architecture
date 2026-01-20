@@ -3,7 +3,6 @@
 This document describes the high-level architecture of a centralized
 cryptocurrency trading platform and the responsibilities of its core
 components.
-
 The platform supports spot trading, OTC trading, and C2C (P2P) trading.
 
 
