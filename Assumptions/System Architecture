@@ -6,13 +6,10 @@ components.
 
 The platform supports spot trading, OTC trading, and C2C (P2P) trading.
 
----
 
 ## High-Level Architecture
+![image alt](https://github.com/rohit-261093/Cryptocurrency-exchange/blob/530cf59855bd8833556d5abc6c9e9b8970c1c62f/Crypto.png)
 
-![System Architecture](./architecture.png)
-
----
 
 ## Architecture Layers
 
