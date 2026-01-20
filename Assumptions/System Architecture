@@ -1,0 +1,132 @@
+# System Architecture
+
+This document describes the high-level architecture of a centralized
+cryptocurrency trading platform and the responsibilities of its core
+components.
+
+The platform supports spot trading, OTC trading, and C2C (P2P) trading.
+
+---
+
+## High-Level Architecture
+
+![System Architecture](./architecture.png)
+
+---
+
+## Architecture Layers
+
+### 1. Frontend Layer
+
+The frontend layer provides user-facing interfaces for interacting with
+the platform.
+
+**Components**
+- Android App
+- iOS App
+- PC Web
+- Mobile Web
+
+**Responsibilities**
+- User authentication
+- Order placement
+- Account and balance display
+- Real-time market data display
+
+---
+
+### 2. Access Layer
+
+The access layer exposes platform functionality to clients.
+
+**Components**
+- Web
+- API
+- WebSocket
+
+**Responsibilities**
+- Handle synchronous API requests
+- Deliver real-time updates (prices, order status)
+- Enforce access control and rate limiting
+
+---
+
+### 3. Unified Gateway Routing
+
+**Component**
+- Nginx
+
+**Responsibilities**
+- Centralized routing for all inbound traffic
+- Load balancing across backend services
+- TLS termination and request forwarding
+
+---
+
+### 4. Business Layer
+
+The business layer implements core trading and account logic.
+
+#### Matchmaking Engine
+- Maintains order books for trading pairs
+- Matches buy and sell orders based on price-time priority
+- Publishes trade execution events
+
+#### OTC / C2C Service
+- Supports off-order-book trading
+- Enables peer-to-peer trades with escrow
+- Manages negotiated and fixed-price trades
+
+#### Marketing Service
+- Manages promotions and referral programs
+- Calculates trading incentives and rewards
+
+#### User Center Service
+- Manages user profiles and authentication data
+- Handles KYC status and account metadata
+
+#### Wallet Service
+- Manages user balances
+- Locks funds during order placement
+- Applies balance updates after trade execution
+- Interfaces with blockchain nodes for deposits and withdrawals
+
+---
+
+### 5. Data Layer
+
+The data layer stores transactional and operational data.
+
+#### MongoDB
+- Stores semi-structured or historical data
+- Used for flexible data models
+
+#### MySQL
+- Primary relational datastore
+- Stores orders, trades, balances, and ledgers
+- Acts as the system of record
+
+#### Redis
+- In-memory data store
+- Used for order books, caches, and real-time state
+
+#### Kafka
+- Event streaming platform
+- Delivers trade, wallet, and system events asynchronously
+
+---
+
+### 6. Blockchain Node Layer
+
+The blockchain layer enables interaction with external networks.
+
+**Components**
+- BTC Node
+- ETH Node
+- XRP Node
+- Other supported blockchain nodes
+
+**Responsibilities**
+- Monitor deposits
+- Broadcast withdrawals
+- Track transaction confirmations
