@@ -1,0 +1,231 @@
+# Recovery Architecture  
+Crypto Exchange Platform (AWS Environment)
+
+This document defines the recovery architecture for a centralized cryptocurrency
+exchange deployed on AWS. The architecture translates continuity and recovery
+strategies into concrete infrastructure patterns, failover mechanisms, and
+recovery dependencies.
+
+---
+
+## 1. Purpose
+
+The recovery architecture ensures that critical platform services can be
+restored within defined Recovery Time Objectives (RTO) and Recovery Point
+Objectives (RPO), while preserving asset integrity, trading correctness, and
+regulatory obligations.
+
+---
+
+## 2. Architectural Principles
+
+The recovery architecture is based on the following principles:
+
+1. Multi-AZ resilience is mandatory for all critical services  
+2. Stateful services favor controlled failover over concurrency  
+3. Stateless services recover automatically  
+4. Data integrity validation precedes service resumption  
+5. External dependency failures are isolated and contained  
+6. Recovery paths are deterministic and testable  
+
+---
+
+## 3. AWS Resilience Scope
+
+The platform is deployed using the following AWS resilience constructs:
+
+- Multiple Availability Zones within a primary region
+- Standby capacity for critical stateful services
+- Automated health checks and failover for stateless layers
+- Backup, snapshot, and replication mechanisms for data stores
+
+Multi-region recovery is considered a future enhancement and is not in scope
+for this baseline architecture.
+
+---
+
+## 4. Service-Level Recovery Architecture
+
+### 4.1 API and Web Layer
+
+**Components**
+- Amazon ALB
+- Stateless services on ECS / EKS
+- Auto Scaling Groups
+
+**Recovery Design**
+- Deployed across multiple AZs
+- Health checks trigger automatic instance replacement
+- Traffic routed only to healthy targets
+
+**Failure Scenarios Covered**
+- Instance failure
+- AZ-level service degradation
+
+**Recovery Characteristics**
+- RTO: Near-zero
+- RPO: Not applicable (stateless)
+
+---
+
+### 4.2 Matchmaking Engine
+
+**Components**
+- Primary matching engine
+- Standby matching engine
+- Leader election mechanism
+- Shared state store (durable)
+
+**Recovery Design**
+- Active–Passive deployment across AZs
+- Automated leader election on failure
+- Standby node promoted to active role
+- State reloaded from durable storage
+
+**Failure Scenarios Covered**
+- Primary engine failure
+- AZ outage
+
+**Recovery Characteristics**
+- RTO: Seconds to minutes
+- RPO: Seconds (bounded by state persistence)
+
+---
+
+### 4.3 Wallet Service
+
+**Components**
+- Wallet service (single writer)
+- Relational database (Amazon RDS)
+- Encrypted backups and snapshots
+
+**Recovery Design**
+- Active–Passive service model
+- RDS Multi-AZ with synchronous replication
+- Standby wallet instance promoted manually or semi-automatically
+- Post-failover reconciliation before enabling withdrawals
+
+**Failure Scenarios Covered**
+- Application failure
+- Database instance failure
+- AZ outage
+
+**Recovery Characteristics**
+- RTO: Minutes
+- RPO: Near-zero
+
+---
+
+### 4.4 Market Data and WebSocket Services
+
+**Components**
+- Market data processors
+- WebSocket gateways
+- In-memory caches (Redis)
+
+**Recovery Design**
+- Active–Active deployment across AZs
+- Automatic restart of failed components
+- Clients reconnect transparently
+
+**Failure Scenarios Covered**
+- Node failure
+- Transient network issues
+
+**Recovery Characteristics**
+- RTO: Seconds
+- RPO: Not applicable or minimal
+
+---
+
+### 4.5 Deposits and Withdrawals (Blockchain Integration)
+
+**Components**
+- Blockchain nodes or third-party RPC providers
+- Transaction monitoring services
+- Confirmation tracking
+
+**Recovery Design**
+- Multiple node/provider configurations
+- Manual switching between providers
+- Delayed transaction processing during instability
+- Manual approval required before resuming withdrawals
+
+**Failure Scenarios Covered**
+- Provider outage
+- Blockchain congestion or reorg events
+
+**Recovery Characteristics**
+- RTO: Variable
+- RPO: Zero (no unconfirmed transaction loss)
+
+---
+
+### 4.6 Databases and Persistent Storage
+
+**Components**
+- Amazon RDS (transactional data)
+- Amazon S3 (logs, reports, backups)
+- Redis (ephemeral caches)
+
+**Recovery Design**
+- RDS Multi-AZ for synchronous replication
+- Automated backups and point-in-time recovery
+- Redis rebuilt from source of truth if lost
+- S3 versioning and cross-AZ durability
+
+**Failure Scenarios Covered**
+- Data corruption
+- Instance failure
+- Accidental deletion
+
+**Recovery Characteristics**
+- RTO: Minutes to hours (depending on restore type)
+- RPO: Configured per data classification
+
+---
+
+## 5. Dependency-Aware Recovery Sequencing
+
+Recovery follows a dependency-based order:
+
+1. Core data stores (RDS, durable state)
+2. Wallet Service
+3. Matchmaking Engine
+4. Trading APIs
+5. Market data services
+6. Deposits and withdrawals
+
+This sequencing ensures correctness before customer-facing availability.
+
+---
+
+## 6. Observability and Recovery Triggers
+
+Recovery actions are initiated based on:
+
+- Health checks and alarms (CloudWatch)
+- Application-level error thresholds
+- Manual incident declaration
+
+Alerts are routed to on-call engineering and security teams for validation and
+coordination.
+
+---
+
+## 7. Validation and Post-Recovery Controls
+
+Before full service restoration:
+
+- Data integrity checks are performed
+- Wallet balances are reconciled
+- Trading correctness is validated
+- Withdrawal resumption requires explicit approval
+
+---
+
+## 8. Outcome
+
+This recovery architecture provides a controlled, predictable recovery model
+aligned with defined continuity strategies. It minimizes asset risk, preserves
+market integrity, and enables repeatable recovery under stress.
