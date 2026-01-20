@@ -1,0 +1,233 @@
+# Recovery Testing Strategy  
+Crypto Exchange Platform (AWS Environment)
+
+This document defines the recovery testing strategy for the crypto exchange
+platform. It ensures that continuity and recovery strategies and recovery
+architecture are effective, repeatable, and aligned with service tiering and
+business impact.
+
+---
+
+## 1. Purpose
+
+The purpose of recovery testing is to:
+
+- Validate recovery objectives (RTO and RPO)
+- Verify recovery architecture and operational readiness
+- Reduce uncertainty during real incidents
+- Satisfy internal governance and regulatory expectations
+
+Recovery testing focuses on **capability validation**, not theoretical design.
+
+---
+
+## 2. Scope
+
+Recovery testing applies to:
+
+- All production services across all service tiers
+- Infrastructure, application, and data recovery mechanisms
+- Human decision-making and escalation paths
+- External dependencies where feasible
+
+---
+
+## 3. Testing Principles
+
+Recovery testing is guided by the following principles:
+
+1. Test the highest-risk and highest-impact services first
+2. Test production-like conditions wherever possible
+3. Prioritize safety and data integrity over realism
+4. Avoid customer impact unless explicitly approved
+5. Document gaps, not just successes
+6. Improve strategies and architecture based on outcomes
+
+---
+
+## 4. Testing Types
+
+Recovery testing includes multiple test types, increasing in complexity and
+risk.
+
+### 4.1 Tabletop Exercises
+- Scenario-based discussions
+- Validate decision-making, escalation, and ownership
+- No system changes
+
+### 4.2 Technical Recovery Tests
+- Infrastructure and application recovery actions
+- Controlled, non-destructive testing
+
+### 4.3 Failover Simulations
+- Active promotion of standby components
+- Limited production impact
+
+### 4.4 Full-Scale Recovery Exercises
+- End-to-end recovery validation
+- Rare and executive-approved
+
+---
+
+## 5. Tier-Based Recovery Testing Strategy
+
+---
+
+### 5.1 Tier 0 – Systemic / Asset-Critical Services
+
+**Services**
+- Wallet Service
+- Ledger / Balance Store
+- Deposits and Withdrawals
+
+**Testing Objectives**
+- Validate near-zero data loss
+- Confirm controlled failover procedures
+- Verify post-recovery reconciliation
+
+**Testing Approach**
+| Test Type | Description |
+|--------|-------------|
+| Tabletop | Custody loss and blockchain outage scenarios |
+| Technical | Standby database promotion in non-prod |
+| Simulation | Read-only recovery validation |
+
+**Frequency**
+- Tabletop: Quarterly
+- Technical: Bi-annually
+- Full-scale: Annually (non-production)
+
+---
+
+### 5.2 Tier 1 – Trading-Critical Services
+
+**Services**
+- Matchmaking Engine
+- Trading APIs
+- Market Data Services
+
+**Testing Objectives**
+- Validate leader election and failover speed
+- Ensure trade correctness after recovery
+- Confirm degraded-mode behavior
+
+**Testing Approach**
+| Test Type | Description |
+|--------|-------------|
+| Tabletop | Trading halt and restart scenarios |
+| Technical | Leader failover tests |
+| Simulation | Traffic rerouting and service restart |
+
+**Frequency**
+- Tabletop: Quarterly
+- Technical: Quarterly
+- Full-scale: Annually
+
+---
+
+### 5.3 Tier 2 – Customer-Facing Non-Systemic Services
+
+**Services**
+- OTC Trading
+- C2C Trading
+
+**Testing Objectives**
+- Validate manual recovery procedures
+- Confirm acceptable recovery timelines
+
+**Testing Approach**
+| Test Type | Description |
+|--------|-------------|
+| Tabletop | Service disable/enable scenarios |
+| Technical | Manual restart and redeploy tests |
+
+**Frequency**
+- Tabletop: Bi-annually
+- Technical: Annually
+
+---
+
+### 5.4 Tier 3 – Internal & Non-Critical Services
+
+**Services**
+- Reporting
+- Admin and Backoffice Tools
+
+**Testing Objectives**
+- Confirm backup availability
+- Validate rebuild procedures
+
+**Testing Approach**
+| Test Type | Description |
+|--------|-------------|
+| Tabletop | Data loss and access disruption |
+| Technical | Backup restore validation |
+
+**Frequency**
+- Tabletop: Annually
+- Technical: Annually
+
+---
+
+## 6. Dependency Recovery Testing
+
+### 6.1 AWS Infrastructure
+- AZ failure simulations
+- Auto Scaling recovery validation
+- Backup restore testing
+
+### 6.2 External Dependencies (RPC Providers)
+- Provider outage simulations
+- Manual switching validation
+- Transaction pause and resume verification
+
+---
+
+## 7. Validation Criteria
+
+Each test must validate:
+
+- RTO and RPO compliance
+- Correct execution of recovery steps
+- Clear ownership and escalation
+- Absence of data corruption or duplication
+- Successful post-recovery validation checks
+
+---
+
+## 8. Documentation and Evidence
+
+For each test:
+
+- Test scenario and objectives documented
+- Execution steps recorded
+- Gaps and issues logged
+- Remediation actions assigned
+- Evidence retained for audit purposes
+
+---
+
+## 9. Governance and Reporting
+
+- Test results are reviewed by Engineering and Security
+- High-risk gaps are escalated to senior leadership
+- Strategy updates follow significant findings
+- Test outcomes feed into risk register updates
+
+---
+
+## 10. Continuous Improvement
+
+Recovery testing is iterative:
+
+- Failed tests drive architecture changes
+- Near-misses influence strategy refinement
+- Testing scope expands with platform growth
+
+---
+
+## 11. Outcome
+
+This recovery testing strategy ensures that recovery capabilities are not only
+designed but proven, reducing recovery risk and improving operational confidence
+during real incidents.
