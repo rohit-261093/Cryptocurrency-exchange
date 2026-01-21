@@ -64,7 +64,7 @@ The repository is organised by **control and governance domains**, rather than b
 
 ---
 
-### 📁 Assumptions (https://github.com/rohit-261093/Cryptocurrency-exchange/tree/23f36ec38b735a7a36bdf8b8b915a1fc6c1a2572/Assumptions)
+### 📁 [Assumptions] (https://github.com/rohit-261093/Cryptocurrency-exchange/tree/23f36ec38b735a7a36bdf8b8b915a1fc6c1a2572/Assumptions)
 - Key operating assumptions
 - High-level architecture diagram
 - System design overview
