@@ -129,33 +129,16 @@ Detailed technical implementations are intentionally out of scope.
 
 ---
 
-## How to Read This Repository (Interview Guidance)
+## How to Read This Repository
 
-For interview discussions, the following reading order is recommended:
+The following reading order is recommended:
 
 1. **Assumptions & Architecture**
-2. **Operational Resilience Framework** (Digital Operational Resilience)
-3. **Important Business Services & Impact Tolerances**
-4. **Incident Response & Post-Incident Review Framework** (BCP-DR)
-5. **ICT Governance & Oversight**
-6. **Security and Access Control Management**
+2. **Business Continuity Management**(BCP-DR)
+3. **Operational Resilience Framework** (Digital Operational Resilience)
+4. **Important Business Services & Impact Tolerances** (Digital Operational Resilience)
+5. **Incident Response & Post-Incident Review Framework** (BCP-DR)
+6. **Governance & Reporting**
+7. **Security and Access Control Management**
 
 Supporting documents provide depth and regulatory context but are not required for an initial walkthrough.
-
----
-
-## Intended Audience
-
-This repository is intended for:
-- Security, risk, and technology leadership
-- Senior management and Board-level discussions
-- Regulators and audit stakeholders
-- Interview and role capability assessment
-
----
-
-## Final Note
-
-The artefacts in this repository are designed to demonstrate **how security and resilience leadership decisions are made**, rather than to prescribe specific tools or technologies.
-
-The approach is intentionally **practical, proportionate, and scalable**, reflecting the realities of a growing cryptocurrency exchange.
