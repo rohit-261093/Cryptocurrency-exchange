@@ -1,0 +1,130 @@
+# ICT Risks and Key Risk Indicators (KRIs)
+
+## 1. Purpose
+
+This document identifies the key ICT risks that could materially impact the organisation’s most critical Important Business Services:
+- Crypto Trading Execution
+- Digital Asset Custody
+
+It also defines a focused set of **Key Risk Indicators (KRIs)** used to monitor these risks and support early intervention before impact tolerances are breached.
+
+The approach is intentionally proportionate, aligning with the organisation’s size, complexity, and risk profile.
+
+---
+
+## 2. Scope
+
+### In Scope
+- ICT risks affecting Crypto Trading Execution
+- ICT risks affecting Digital Asset Custody
+- Shared ICT risks across both services
+
+---
+
+## 3. ICT Risk Themes
+
+The following ICT risk themes have been identified as having the highest potential to impact in-scope services:
+
+1. Cloud and Infrastructure Availability  
+2. Cyber Security Incidents  
+3. Software and Configuration Failures  
+4. Data Integrity and Loss  
+5. Third-Party Service Disruption  
+
+Each risk theme is assessed based on its ability to cause service disruption beyond defined impact tolerances.
+
+---
+
+## 4. Key ICT Risks by Important Business Service
+
+### 4.1 Crypto Trading Execution – Key ICT Risks
+
+- Prolonged cloud infrastructure outage affecting trading systems
+- Failure or degradation of market data feeds during volatile conditions
+- Application defects causing order execution errors
+- Distributed denial-of-service (DDoS) attacks on public APIs
+- Database performance or availability issues impacting order processing
+
+---
+
+### 4.2 Digital Asset Custody – Key ICT Risks
+
+- Compromise or unavailability of key management systems
+- Wallet software defects resulting in incorrect transactions
+- Blockchain node failures impacting transaction validation
+- Unauthorised access to custody systems
+- Loss or corruption of wallet configuration data
+
+---
+
+## 5. Key Risk Indicators (KRIs)
+
+KRIs are designed to provide **early warning signals** of deteriorating resilience.  
+Only a small number of KRIs are used to ensure clarity and actionability.
+
+---
+
+### 5.1 Cloud and Infrastructure KRIs
+
+| KRI | Description | Threshold |
+|---|-------------|-----------|
+| Service availability | Availability of core trading and custody platforms | < 99.9% |
+| Error rate | API or service error rates | Sustained > 2% |
+| Resource saturation | CPU / memory utilisation | Sustained > 80% |
+
+---
+
+### 5.2 Cyber Security KRIs
+
+| KRI | Description | Threshold |
+|---|-------------|-----------|
+| Critical vulnerabilities | Open critical security vulnerabilities | > 7 days |
+| Security incidents | Confirmed security incidents | Any |
+| Privileged access changes | Unreviewed privileged access | > 24 hours |
+
+---
+
+### 5.3 Application and Data KRIs
+
+| KRI | Description | Threshold |
+|---|-------------|-----------|
+| Failed transactions | Percentage of failed trades or transfers | Sustained > 1% |
+| Data integrity issues | Detected data inconsistencies | Any |
+| Backup failures | Failed backup jobs for critical data | Any |
+
+---
+
+### 5.4 Third-Party KRIs
+
+| KRI | Description | Threshold |
+|---|-------------|-----------|
+| SLA breaches | Availability or performance SLA breaches | Any |
+| Repeated outages | Multiple disruptions within a defined period | > 1 per quarter |
+| Dependency concentration | Single-provider reliance for critical service | Reviewed periodically |
+
+---
+
+## 6. KRI Monitoring and Escalation
+
+KRIs are monitored through existing monitoring, logging, and security tooling.
+
+Escalation principles include:
+- Immediate escalation for any breach relating to security or data integrity
+- Management review for repeated or sustained threshold breaches
+- Risk assessment and remediation tracking for material trends
+
+KRIs inform operational decision-making and resilience prioritisation rather than serving as static compliance metrics.
+
+---
+
+## 7. Use of KRIs in Operational Resilience
+
+KRIs are used to:
+- Trigger proactive investigation and remediation
+- Inform incident severity assessment
+- Support resilience testing scenario selection
+- Provide management visibility into resilience posture
+
+KRI trends are reviewed alongside incident data and test outcomes to identify areas for improvement.
+
+---
