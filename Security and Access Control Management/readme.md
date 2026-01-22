@@ -1,12 +1,12 @@
 
-# Security & Access Management  
+# Security Management  
 **AWS-Based Cryptocurrency Exchange**
 
 ---
 
 ## Overview
 
-This folder contains a set of **Security and Access Management standards** designed for an **AWS-first cryptocurrency exchange** operating in a regulated environment.
+This folder contains a set of **Security standards** designed for an **AWS-first cryptocurrency exchange** operating in a regulated environment.
 
 The standards demonstrate how security controls can be:
 - Risk‑based
@@ -39,6 +39,3 @@ They assume:
 - ✅ Strong separation of duties and least privilege
 - ✅ Regulatory oversight (e.g. EU / CBI / DORA)
 
----
-
-## Structure
